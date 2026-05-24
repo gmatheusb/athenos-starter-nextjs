@@ -29,12 +29,12 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
     <nav
       className={cn(
         'flex h-full w-60 flex-col',
-        'bg-[#07080f] border-r border-[rgba(255,255,255,0.06)]',
+        'bg-[var(--bg-panel-deep)] border-r border-[var(--border-subtle)]',
         className,
       )}
     >
       {header && (
-        <div className="border-b border-[rgba(255,255,255,0.06)] p-4">
+        <div className="border-b border-[var(--border-subtle)] p-4">
           {header}
         </div>
       )}
@@ -43,7 +43,7 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
         {sections.map((section, si) => (
           <div key={si} className={cn(si > 0 && 'mt-4')}>
             {section.title && (
-              <p className="mb-1 px-2 text-[9px] font-semibold uppercase tracking-[0.14em] text-[rgba(148,163,184,0.4)]">
+              <p className="mb-1 px-2 text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted-dim)]">
                 {section.title}
               </p>
             )}
@@ -63,13 +63,13 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--acc-img)]',
                       'disabled:cursor-not-allowed disabled:opacity-40',
                       isActive
-                        ? 'bg-[rgba(168,85,247,0.12)] text-[#c084fc]'
-                        : 'text-[rgba(148,163,184,0.65)] hover:bg-[rgba(255,255,255,0.05)] hover:text-[rgba(226,232,240,0.9)]',
+                        ? 'bg-[rgba(168,85,247,0.12)] text-[var(--acc-img)]'
+                        : 'text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
                     )}
                   >
                     {item.icon && (
                       <span
-                        className={cn('shrink-0', isActive ? 'text-[#c084fc]' : 'text-[rgba(148,163,184,0.4)]')}
+                        className={cn('shrink-0', isActive ? 'text-[var(--acc-img)]' : 'text-[var(--text-muted-dim)]')}
                         aria-hidden="true"
                       >
                         {item.icon}
@@ -81,8 +81,8 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                         'flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full px-1.5',
                         'text-[10px] font-semibold',
                         isActive
-                          ? 'bg-[rgba(168,85,247,0.2)] text-[#c084fc]'
-                          : 'bg-[rgba(255,255,255,0.08)] text-[rgba(148,163,184,0.5)]',
+                          ? 'bg-[rgba(168,85,247,0.2)] text-[var(--acc-img)]'
+                          : 'bg-[var(--surface-hover)] text-[var(--text-muted)]',
                       )}>
                         {item.badge}
                       </span>
@@ -96,7 +96,7 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
       </div>
 
       {footer && (
-        <div className="border-t border-[rgba(255,255,255,0.06)] p-3">
+        <div className="border-t border-[var(--border-subtle)] p-3">
           {footer}
         </div>
       )}
