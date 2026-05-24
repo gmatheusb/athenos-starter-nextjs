@@ -39,7 +39,7 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
         </div>
       )}
 
-      <div className="flex-1 overflow-y-auto px-2 py-3">
+      <div className="scroll-area flex-1 overflow-y-auto px-2 py-3">
         {sections.map((section, si) => (
           <div key={si} className={cn(si > 0 && 'mt-4')}>
             {section.title && (
