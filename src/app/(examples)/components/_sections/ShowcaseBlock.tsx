@@ -11,8 +11,9 @@ interface ShowcaseBlockProps {
 }
 
 export function ShowcaseBlock({ title, description, children, contentClassName, wide = false }: ShowcaseBlockProps) {
+  const id = title.replace(/\s+/g, '')
   return (
-    <Card className={cn('p-0', wide && 'col-span-full')}>
+    <Card id={id} className={cn('p-0', wide && 'col-span-full')}>
       <div className="rounded-t-xl border-b border-[var(--border-subtle)] bg-[var(--surface-deep)] px-4 py-3">
         <p className="text-sm font-semibold text-[var(--text-primary)]">{title}</p>
         {description && (

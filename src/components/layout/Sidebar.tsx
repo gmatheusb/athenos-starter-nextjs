@@ -113,12 +113,17 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                     {hasSubitems && isActive && (
                       <div className="mb-1 ml-3 mt-0.5 flex flex-col gap-0.5 border-l border-[var(--border-subtle)] pl-3">
                         {item.subitems!.map(sub => (
-                          <span
+                          <button
                             key={sub.id}
-                            className="truncate rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[var(--text-muted)]"
+                            type="button"
+                            onClick={() => {
+                              const id = sub.label.replace(/\s+/g, '')
+                              document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                            }}
+                            className="truncate rounded-[var(--radius-sm)] px-2 py-1 text-left text-xs text-[var(--text-muted)] transition-colors duration-fast hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
                           >
                             {sub.label}
-                          </span>
+                          </button>
                         ))}
                       </div>
                     )}
