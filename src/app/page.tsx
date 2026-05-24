@@ -4,7 +4,7 @@ import Link from 'next/link'
 import {
   Sparkles, Sun, Moon,
   Layers, Zap, Wrench, Palette, Code2, Shield,
-  ArrowRight, LayoutDashboard, LogIn,
+  ArrowRight, LayoutDashboard, LogIn, UserPlus,
 } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { Button } from '@/components/ui/Button'
@@ -128,6 +128,12 @@ export default function LandingPage() {
               Ver login
             </Button>
           </Link>
+          <Link href="/onboarding">
+            <Button variant="ghost" size="sm">
+              <UserPlus size={14} />
+              Onboarding
+            </Button>
+          </Link>
         </div>
 
         {/* Install command */}
@@ -188,6 +194,7 @@ export default function LandingPage() {
             <Link href="/admin" className="hover:text-[var(--text-primary)] transition-colors">Admin</Link>
             <Link href="/settings" className="hover:text-[var(--text-primary)] transition-colors">Settings</Link>
             <Link href="/login" className="hover:text-[var(--text-primary)] transition-colors">Login</Link>
+            <Link href="/onboarding" className="hover:text-[var(--text-primary)] transition-colors">Onboarding</Link>
           </div>
         </div>
       </footer>

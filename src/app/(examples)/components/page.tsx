@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database, Zap, Wrench } from 'lucide-react'
+import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database, Zap, Wrench, BarChart2 } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Button } from '@/components/ui/Button'
@@ -16,6 +16,7 @@ import { NavigationSection } from './_sections/NavigationSection'
 import { DataSection } from './_sections/DataSection'
 import { HooksSection } from './_sections/HooksSection'
 import { UtilsSection } from './_sections/UtilsSection'
+import { ChartsSection } from './_sections/ChartsSection'
 import type { LucideIcon } from 'lucide-react'
 
 interface NavSection {
@@ -75,6 +76,13 @@ const NAV: NavSection[] = [
     icon: Wrench,
     items: ['format — Números', 'format — Datas', 'format — Strings', 'dates — Cálculos', 'validators — CPF & CNPJ', 'validators — Contato'],
     component: UtilsSection,
+  },
+  {
+    id: 'charts',
+    label: 'Charts',
+    icon: BarChart2,
+    items: ['BarChart — Vertical', 'BarChart — Horizontal', 'LineChart — Usuários ativos', 'LineChart — Requisições/hora', 'DonutChart — Receita', 'DonutChart — Planos'],
+    component: ChartsSection,
   },
 ]
 
@@ -158,7 +166,7 @@ export default function ComponentsPage() {
           <div className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-canvas)]/80 px-8 py-5 backdrop-blur-sm">
             <PageHeader
               title={active.label}
-              description={`${active.items.length} ${active.id === 'hooks' ? 'hooks' : active.id === 'utils' ? 'módulos de utilitários' : 'componentes'} nesta categoria`}
+              description={`${active.items.length} ${active.id === 'hooks' ? 'hooks' : active.id === 'utils' ? 'módulos de utilitários' : active.id === 'charts' ? 'tipos de gráfico' : 'componentes'} nesta categoria`}
               actions={
                 <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--acc-img)]/10">
                   <ActiveIcon size={15} className="text-[var(--acc-img)]" />
