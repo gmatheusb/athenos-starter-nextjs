@@ -251,3 +251,13 @@ body {
   from { opacity: 1; transform: translateX(0) scale(1);        }
   to   { opacity: 0; transform: translateX(16px) scale(0.97);  }
 }
+
+@keyframes drawer-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0);    }
+}
+
+@keyframes drawer-in-left {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0);     }
+}
