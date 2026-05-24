@@ -87,6 +87,7 @@
   /* ── Z-index ─────────────────────────────────────── */
   --z-base:    0;
   --z-sticky:  10;
+  --z-popover: 30;
   --z-overlay: 40;
   --z-modal:   50;
   --z-toast:   60;
