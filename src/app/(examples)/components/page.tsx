@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { useTheme } from '@/hooks/useTheme'
+import { Sidebar } from '@/components/layout/Sidebar'
 import { BasicSection } from './_sections/BasicSection'
 import { FormsSection } from './_sections/FormsSection'
 import { FeedbackSection } from './_sections/FeedbackSection'
@@ -65,11 +65,31 @@ export default function ComponentsPage() {
   const ActiveSection = active.component
   const ActiveIcon = active.icon
 
+  const sidebarSections = [
+    {
+      title: 'Categorias',
+      items: NAV.map((s) => ({
+        id: s.id,
+        label: s.label,
+        icon: <s.icon size={15} />,
+        badge: s.items.length,
+      })),
+    },
+    {
+      title: active.label,
+      items: active.items.map((name) => ({
+        id: `item-${name}`,
+        label: name,
+        disabled: true,
+      })),
+    },
+  ]
+
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-[var(--bg-canvas)]">
 
-      {/* ── Header ───────────────────────────────────────────────── */}
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-modal)] px-5">
+      {/* Header */}
+      <header className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-modal)] px-5" style={{ zIndex: 'var(--z-sticky)' }}>
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-gradient-to-br from-[var(--acc-img)] to-[var(--acc-vid)]">
             <Sparkles size={14} className="text-white" />
@@ -82,15 +102,14 @@ export default function ComponentsPage() {
 
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 sm:flex">
-            <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]">
-              63 componentes
-            </span>
-            <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]">
-              7 hooks
-            </span>
-            <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]">
-              3 utilitários
-            </span>
+            {['63 componentes', '7 hooks', '3 utilitários'].map((label) => (
+              <span
+                key={label}
+                className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]"
+              >
+                {label}
+              </span>
+            ))}
           </div>
           <button
             type="button"
@@ -103,73 +122,23 @@ export default function ComponentsPage() {
         </div>
       </header>
 
-      {/* ── Body ─────────────────────────────────────────────────── */}
+      {/* Body */}
       <div className="flex flex-1 overflow-hidden">
 
-        {/* Sidebar */}
-        <aside className="scroll-area flex w-60 shrink-0 flex-col overflow-y-auto border-r border-[var(--border)] bg-[var(--bg-modal)]">
-
-          {/* Categories */}
-          <nav className="p-3">
-            <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted-dim)]">
-              Categorias
-            </p>
-            {NAV.map((section) => {
-              const isActive = activeId === section.id
-              const Icon = section.icon
-              return (
-                <button
-                  key={section.id}
-                  type="button"
-                  onClick={() => setActiveId(section.id)}
-                  className={cn(
-                    'mb-0.5 flex w-full items-center gap-3 rounded-[var(--radius-md)] px-3 py-2.5 text-sm font-medium transition-colors duration-150',
-                    isActive
-                      ? 'bg-[var(--acc-img)]/10 text-[var(--acc-img)]'
-                      : 'text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
-                  )}
-                >
-                  <Icon size={15} className="shrink-0" />
-                  <span className="flex-1 text-left">{section.label}</span>
-                  <span className={cn(
-                    'rounded-full px-1.5 py-0.5 text-[9px] font-bold tabular-nums',
-                    isActive
-                      ? 'bg-[var(--acc-img)]/20 text-[var(--acc-img)]'
-                      : 'bg-[var(--surface-deep)] text-[var(--text-muted-dim)]',
-                  )}>
-                    {section.items.length}
-                  </span>
-                </button>
-              )
-            })}
-          </nav>
-
-          {/* Component list for active section */}
-          <div className="mx-3 border-t border-[var(--border-subtle)] pt-3 pb-2">
-            <p className="mb-2 px-2 text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted-dim)]">
-              {active.label}
-            </p>
-            <ul className="flex flex-col gap-0.5">
-              {active.items.map((item) => (
-                <li key={item} className="flex items-center gap-2.5 rounded-[var(--radius-sm)] px-2 py-1.5">
-                  <span className="h-1 w-1 shrink-0 rounded-full bg-[var(--acc-img)]/40" />
-                  <span className="text-xs text-[var(--text-muted)]">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Footer */}
-          <div className="mt-auto border-t border-[var(--border-subtle)] p-4">
-            <p className="text-[10px] text-[var(--text-muted-dim)]">
+        {/* Sidebar do design system */}
+        <Sidebar
+          activeId={activeId}
+          onNavigate={(id) => { if (NAV.some((s) => s.id === id)) setActiveId(id) }}
+          sections={sidebarSections}
+          footer={
+            <p className="text-[10px] text-[rgba(148,163,184,0.35)]">
               Next.js 16 · React 19 · TailwindCSS
             </p>
-          </div>
-        </aside>
+          }
+        />
 
-        {/* Main content */}
-        <main className="flex-1 overflow-hidden flex flex-col">
-          {/* Section header */}
+        {/* Content */}
+        <main className="flex flex-1 flex-col overflow-hidden">
           <div className="flex shrink-0 items-center gap-3 border-b border-[var(--border)] bg-[var(--bg-canvas)]/80 px-8 py-4 backdrop-blur-sm">
             <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--acc-img)]/10">
               <ActiveIcon size={15} className="text-[var(--acc-img)]" />
@@ -184,7 +153,6 @@ export default function ComponentsPage() {
             <ActiveSection />
           </div>
         </main>
-
       </div>
     </div>
   )
