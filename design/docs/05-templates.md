@@ -346,4 +346,51 @@ import { RoleBadge } from '@/components/ui/Badge'
 // ✅ Separar com useMemo
 const adminUsers = useMemo(() => users.filter(u => u.role === 'admin'), [users])
 {adminUsers.map(u => ...)}
+
+---
+
+## Exemplo implementado: Login
+
+**Arquivo:** `src/app/(examples)/login/page.tsx`
+
+### Estrutura JSX
+
+```
+LoginPage
+├── AuthOrbs                   (fundo animado, fixed)
+├── button toggle dark/light   (fixed top-4 right-4)
+└── div.card (max-w-[380px])
+    ├── Logo: ícone Sparkles + gradient
+    ├── h1 "Bem-vindo de volta"
+    ├── p subtítulo (--text-muted)
+    ├── Alert variant="error"  (condicional)
+    ├── form
+    │   ├── Input label="E-mail" type="email" leftIcon={Mail}
+    │   ├── Input label="Senha" type="password" leftIcon={Lock}
+    │   ├── link "Esqueceu a senha?" (--acc-img)
+    │   └── Button primary full-width isLoading
+    └── p "Acesso restrito..." (--text-muted-dim, 11px)
+```
+
+### Tokens utilizados
+
+| Token | Onde |
+|---|---|
+| `--bg-canvas` | fundo da página |
+| `--surface` | card |
+| `--border` | borda do card |
+| `--radius-xl` | border-radius do card |
+| `--grad` | background do ícone logo |
+| `--text-primary` | h1 |
+| `--text-muted` | subtítulo |
+| `--text-muted-dim` | rodapé restrito |
+| `--acc-img` | link "Esqueceu a senha?" |
+
+### Regras do padrão
+
+- `AuthOrbs` **apenas** em páginas de auth — nunca em páginas autenticadas
+- Card sempre `max-w-[380px]` — sem exceções
+- Sem `Navbar` ou `Sidebar` — layout limpo
+- Toggle dark/light **sempre** disponível em páginas de auth
+- `animation: 'fade-in-up'` no card para entrada suave
 ```
