@@ -1,5 +1,13 @@
+'use client'
+
 import { cn } from '@/lib/utils'
+import { ChevronDown } from 'lucide-react'
 import type { ReactNode } from 'react'
+
+interface SidebarSubItem {
+  id: string
+  label: string
+}
 
 interface SidebarItem {
   id: string
@@ -8,6 +16,7 @@ interface SidebarItem {
   href?: string
   badge?: string | number
   disabled?: boolean
+  subitems?: SidebarSubItem[]
 }
 
 interface SidebarSection {
@@ -50,45 +59,70 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
             <div className="flex flex-col gap-0.5">
               {section.items.map(item => {
                 const isActive = item.id === activeId
+                const hasSubitems = !!item.subitems?.length
                 const Tag = item.href ? 'a' : 'button'
+
                 return (
-                  <Tag
-                    key={item.id}
-                    {...(item.href ? { href: item.href } : { type: 'button' as const })}
-                    disabled={item.disabled}
-                    onClick={() => !item.disabled && onNavigate?.(item.id)}
-                    className={cn(
-                      'flex w-full items-center gap-2.5 rounded-[var(--radius-md)] px-2.5 py-2',
-                      'text-sm font-medium transition-colors duration-fast',
-                      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--acc-img)]',
-                      isActive
-                        ? 'bg-[rgba(168,85,247,0.12)] text-[var(--acc-img)]'
-                        : item.disabled
-                          ? 'cursor-default text-[var(--text-muted)]'
-                          : 'text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
-                    )}
-                  >
-                    {item.icon && (
-                      <span
-                        className={cn('shrink-0', isActive ? 'text-[var(--acc-img)]' : 'text-[var(--text-muted-dim)]')}
-                        aria-hidden="true"
-                      >
-                        {item.icon}
-                      </span>
-                    )}
-                    <span className="flex-1 truncate text-left">{item.label}</span>
-                    {item.badge !== undefined && (
-                      <span className={cn(
-                        'flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full px-1.5',
-                        'text-[10px] font-semibold',
+                  <div key={item.id}>
+                    <Tag
+                      {...(item.href ? { href: item.href } : { type: 'button' as const })}
+                      disabled={item.disabled}
+                      onClick={() => !item.disabled && onNavigate?.(item.id)}
+                      className={cn(
+                        'flex w-full items-center gap-2.5 rounded-[var(--radius-md)] px-2.5 py-2',
+                        'text-sm font-medium transition-colors duration-fast',
+                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--acc-img)]',
                         isActive
-                          ? 'bg-[rgba(168,85,247,0.2)] text-[var(--acc-img)]'
-                          : 'bg-[var(--surface-hover)] text-[var(--text-muted)]',
-                      )}>
-                        {item.badge}
-                      </span>
+                          ? 'bg-[rgba(168,85,247,0.12)] text-[var(--acc-img)]'
+                          : item.disabled
+                            ? 'cursor-default text-[var(--text-muted)]'
+                            : 'text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
+                      )}
+                    >
+                      {item.icon && (
+                        <span
+                          className={cn('shrink-0', isActive ? 'text-[var(--acc-img)]' : 'text-[var(--text-muted-dim)]')}
+                          aria-hidden="true"
+                        >
+                          {item.icon}
+                        </span>
+                      )}
+                      <span className="flex-1 truncate text-left">{item.label}</span>
+                      {item.badge !== undefined && !hasSubitems && (
+                        <span className={cn(
+                          'flex h-[18px] min-w-[18px] shrink-0 items-center justify-center rounded-full px-1.5',
+                          'text-[10px] font-semibold',
+                          isActive
+                            ? 'bg-[rgba(168,85,247,0.2)] text-[var(--acc-img)]'
+                            : 'bg-[var(--surface-hover)] text-[var(--text-muted)]',
+                        )}>
+                          {item.badge}
+                        </span>
+                      )}
+                      {hasSubitems && (
+                        <ChevronDown
+                          size={13}
+                          className={cn(
+                            'shrink-0 transition-transform duration-200',
+                            isActive ? 'rotate-180 text-[var(--acc-img)]' : 'text-[var(--text-muted-dim)]',
+                          )}
+                        />
+                      )}
+                    </Tag>
+
+                    {hasSubitems && isActive && (
+                      <div className="mb-1 ml-3 mt-0.5 flex flex-col gap-0.5 border-l border-[var(--border-subtle)] pl-3">
+                        {item.subitems!.map(sub => (
+                          <span
+                            key={sub.id}
+                            className="truncate rounded-[var(--radius-sm)] px-2 py-1 text-xs text-[var(--text-muted)]"
+                          >
+                            {sub.label}
+                          </span>
+                        ))}
+                      </div>
                     )}
-                  </Tag>
+                  </div>
                 )
               })}
             </div>

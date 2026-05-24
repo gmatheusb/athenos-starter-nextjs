@@ -77,15 +77,7 @@ export default function ComponentsPage() {
         id: s.id,
         label: s.label,
         icon: <s.icon size={15} />,
-        badge: s.items.length,
-      })),
-    },
-    {
-      title: active.label,
-      items: active.items.map((name) => ({
-        id: `item-${name}`,
-        label: name,
-        disabled: true,
+        subitems: s.items.map((name) => ({ id: `item-${name}`, label: name })),
       })),
     },
   ]
