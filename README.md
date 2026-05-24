@@ -23,7 +23,7 @@ Este repositório é um **starterkit Next.js** pré-configurado com o design sys
 
 ```bash
 # 1. Clone o repositório
-git clone <url-do-repo> meu-projeto
+git clone https://github.com/gmatheusb/athenos-starter-nextjs.git meu-projeto
 cd meu-projeto
 
 # 2. Instale as dependências
