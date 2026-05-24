@@ -26,6 +26,7 @@
 17. [Sistema Glass e Efeitos Especiais](#17-sistema-glass-e-efeitos-especiais)
 18. [Admin Panel](#18-admin-panel)
 19. [Masonry Grid](#19-masonry-grid)
+20. [Hooks & Utilitários](#20-hooks--utilitários)
 
 ---
 
@@ -214,11 +215,24 @@ src/
 │   ├── AuthTemplate.tsx
 │   └── WizardTemplate.tsx
 │
-├── hooks/                  # Custom React hooks
-│   ├── useTheme.ts
-│   ├── useMasonry.ts
-│   ├── useModal.ts
-│   └── useDebounce.ts
+├── hooks/                  # 9 custom React hooks
+│   ├── useAsync.ts         # operações assíncronas (loading, error, execute, reset)
+│   ├── useDebounce.ts      # debounce de valor com delay configurável
+│   ├── useInterval.ts      # setInterval declarativo (delay: null pausa)
+│   ├── useKeyboard.ts      # atalhos de teclado com modificadores
+│   ├── useLocalStorage.ts  # estado persistido com sync entre abas
+│   ├── useMediaQuery.ts    # breakpoints responsivos
+│   ├── useOnClickOutside.ts # fechar dropdown/popover ao clicar fora
+│   ├── useTheme.ts         # toggle dark/light com persistência
+│   ├── useToast.ts         # disparar toasts globais
+│   └── index.ts            # barrel export
+│
+├── lib/                    # 3 módulos de utilitários + cn
+│   ├── format.ts           # formatCurrency, formatDate, formatBytes, slugify, truncate...
+│   ├── validators.ts       # isValidCPF, isValidEmail, isValidPhone, isValidURL...
+│   ├── dates.ts            # addDays, diffInDays, startOfMonth, isBefore, isBetween...
+│   ├── utils.ts            # cn() — clsx + tailwind-merge
+│   └── index.ts            # barrel export
 │
 ├── styles/                 # Estilos auxiliares (NÃO para tokens — ficam em globals.css)
 │   └── animations.css      # @keyframes complexos que não cabem em Tailwind
@@ -1881,7 +1895,7 @@ className="hover:bg-[var(--surface-hover)]"  // sem transition
 | Tipo | Padrão | Exemplo |
 |---|---|---|
 | Componente React | PascalCase | `MediaCard`, `GlassBar` |
-| Hook | camelCase + `use` prefix | `useMasonry`, `useModal` |
+| Hook | camelCase + `use` prefix | `useAsync`, `useDebounce` |
 | Arquivo de componente | PascalCase.tsx | `MediaCard.tsx` |
 | Página (Next.js) | lowercase com hífen | `page.tsx` dentro de `galeria/` |
 | CSS class local | kebab-case | `gal-pulse`, `bell-pulse` |
@@ -2665,9 +2679,44 @@ export function jobAspectRatio(job: JobStatusView): number {
 
 ---
 
+---
+
+# 20. Hooks & Utilitários
+
+Documentação completa de APIs em [`design/docs/09-hooks-utils.md`](./docs/09-hooks-utils.md).
+
+## Hooks — Referência rápida
+
+Import: `import { useAsync, useDebounce } from '@/hooks'`
+
+| Hook | Retorna | Uso principal |
+|---|---|---|
+| `useAsync<T>(fn, immediate?)` | `{ data, loading, error, execute, reset }` | Operações assíncronas com loading/error |
+| `useDebounce<T>(value, delay?)` | `T` | Debounce de valor (evita re-renders por tecla) |
+| `useInterval(callback, delay)` | `void` | Polling ou animação em loop (null pausa) |
+| `useKeyboard(key, handler, options?)` | `void` | Atalhos de teclado com modificadores |
+| `useLocalStorage<T>(key, initial)` | `[value, set, remove]` | Estado persistido com sync entre abas |
+| `useMediaQuery(query)` | `boolean` | Breakpoints: `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` |
+| `useOnClickOutside(ref, handler, enabled?)` | `void` | Fechar dropdown/popover ao clicar fora |
+| `useTheme()` | `{ theme, toggleTheme }` | Toggle dark/light com persistência |
+| `useToast()` | `{ success, error, warning, info }` | Disparar toasts globais |
+
+## Utilitários — Referência rápida
+
+Import: `import { formatCurrency, isValidCPF, addDays, cn } from '@/lib'`
+
+**format.ts** — `formatCurrency`, `formatNumber`, `formatDate`, `formatDateTime`, `formatRelativeTime`, `truncate`, `capitalize`, `slugify`, `formatBytes`, `getInitials`
+
+**validators.ts** — `isValidCPF`, `isValidCNPJ`, `isValidEmail`, `isValidPhone`, `isValidCEP`, `isValidURL`, `isRequired`, `hasMinLength`, `hasMaxLength`
+
+**dates.ts** — `isSameDay`, `isToday`, `isBefore`, `isAfter`, `isBetween`, `addDays`, `addMonths`, `addYears`, `diffInDays`, `diffInMonths`, `startOfDay`, `endOfDay`, `startOfMonth`, `endOfMonth`, `startOfWeek`, `endOfWeek`, `toISODate`, `fromISODate`, `getDaysInMonth`
+
+---
+
 ## Versão e Histórico
 
 | Versão | Data | Mudança |
 |---|---|---|
 | 1.0 | — | Sistema dark inicial (designdark.md) |
 | 2.0 | 2026-05-24 | Dual theme (light + dark), CSS Variables, 16 seções operacionais, templates, checklist |
+| 2.1 | 2026-05-24 | 63 componentes, 9 hooks, 3 módulos utilitários, Sidebar accordion, Hooks/Utils showcase sections |
