@@ -117,7 +117,10 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                             key={sub.id}
                             type="button"
                             onClick={() => {
-                              const el = document.getElementById(sub.label.replace(/\s+/g, ''))
+                              const el = (
+                                document.getElementById(sub.label.replace(/\s+/g, '')) ??
+                                document.querySelector(`[data-showcase*="${sub.label}"]`)
+                              ) as HTMLElement | null
                               if (!el) return
                               let parent = el.parentElement
                               while (parent) {
