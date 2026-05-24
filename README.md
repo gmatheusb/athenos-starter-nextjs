@@ -1,18 +1,4 @@
-# Athenos — Next.js Starter
-
 ![Athenos Banner](design/project-img.png)
-
-**Next.js 16 · React 19 · TailwindCSS · Dual Theme · 63 componentes**
-
-![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)
-![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
-![License](https://img.shields.io/badge/licença-MIT-green?style=flat-square)
-
-Starter kit de produção com design system completo, dual theme light/dark via CSS Custom Properties, biblioteca de 63 componentes, 9 hooks e utilitários prontos para uso.
-
----
 
 ## Demo
 
