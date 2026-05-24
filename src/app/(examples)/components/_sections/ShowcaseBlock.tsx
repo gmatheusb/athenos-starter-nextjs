@@ -12,8 +12,8 @@ interface ShowcaseBlockProps {
 
 export function ShowcaseBlock({ title, description, children, contentClassName, wide = false }: ShowcaseBlockProps) {
   return (
-    <Card className={cn('overflow-hidden p-0', wide && 'col-span-full')}>
-      <div className="border-b border-[var(--border-subtle)] bg-[var(--surface-deep)] px-4 py-3">
+    <Card className={cn('p-0', wide && 'col-span-full')}>
+      <div className="rounded-t-xl border-b border-[var(--border-subtle)] bg-[var(--surface-deep)] px-4 py-3">
         <p className="text-sm font-semibold text-[var(--text-primary)]">{title}</p>
         {description && (
           <p className="mt-0.5 text-xs text-[var(--text-muted)]">{description}</p>
