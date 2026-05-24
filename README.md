@@ -1,5 +1,7 @@
 # Athenos — Next.js Starter
 
+![Athenos Banner](design/project-img.png)
+
 **Next.js 16 · React 19 · TailwindCSS · Dual Theme · 63 componentes**
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)
