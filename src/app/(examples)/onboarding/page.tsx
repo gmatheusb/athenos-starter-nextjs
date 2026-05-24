@@ -152,7 +152,7 @@ export default function OnboardingPage() {
 
   // ── Main wizard ───────────────────────────────────────────────────────────
   return (
-    <div className="relative flex min-h-screen items-start justify-center bg-[var(--bg-canvas)] px-4 py-10">
+    <div className="relative flex min-h-screen items-center justify-center bg-[var(--bg-canvas)] px-4 py-10">
       <AuthOrbs />
 
       {/* Theme toggle */}

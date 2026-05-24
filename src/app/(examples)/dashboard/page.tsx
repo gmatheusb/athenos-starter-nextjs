@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import {
   LayoutDashboard, Users, Settings, Sun, Moon,
   DollarSign, ShoppingCart, TrendingUp, Percent, Plus, Sparkles,
+  BarChart2, LayoutGrid, FolderOpen,
 } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { Sidebar } from '@/components/layout/Sidebar'
@@ -94,15 +95,23 @@ export default function DashboardPage() {
 
   const sidebarSections = [
     {
-      title: 'Principal',
+      title: 'Visão Geral',
       items: [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={15} /> },
-        { id: 'admin', label: 'Usuários', icon: <Users size={15} /> },
       ],
     },
     {
-      title: 'Conta',
+      title: 'Ferramentas',
       items: [
+        { id: 'analytics', label: 'Analytics', icon: <BarChart2 size={15} /> },
+        { id: 'kanban', label: 'Kanban', icon: <LayoutGrid size={15} /> },
+        { id: 'files', label: 'Arquivos', icon: <FolderOpen size={15} /> },
+      ],
+    },
+    {
+      title: 'Administração',
+      items: [
+        { id: 'admin', label: 'Usuários', icon: <Users size={15} /> },
         { id: 'settings', label: 'Configurações', icon: <Settings size={15} /> },
       ],
     },
@@ -133,16 +142,19 @@ export default function DashboardPage() {
         <Sidebar
           activeId="dashboard"
           onNavigate={(id) => {
+            if (id === 'analytics') router.push('/analytics')
+            if (id === 'kanban') router.push('/kanban')
+            if (id === 'files') router.push('/files')
             if (id === 'admin') router.push('/admin')
             if (id === 'settings') router.push('/settings')
           }}
           sections={sidebarSections}
           footer={
             <button
-              onClick={() => router.push('/components')}
+              onClick={() => router.push('/')}
               className="w-full text-left px-1 text-[10px] text-[var(--text-muted-dim)] hover:text-[var(--text-muted)] transition-colors"
             >
-              ← Ver componentes
+              ← Início
             </button>
           }
         />
