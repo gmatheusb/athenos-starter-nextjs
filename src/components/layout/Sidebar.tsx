@@ -117,8 +117,18 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                             key={sub.id}
                             type="button"
                             onClick={() => {
-                              const id = sub.label.replace(/\s+/g, '')
-                              document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                              const el = document.getElementById(sub.label.replace(/\s+/g, ''))
+                              if (!el) return
+                              let parent = el.parentElement
+                              while (parent) {
+                                const { overflow, overflowY } = getComputedStyle(parent)
+                                if (/(auto|scroll)/.test(overflow + overflowY)) {
+                                  const offset = el.getBoundingClientRect().top - parent.getBoundingClientRect().top + parent.scrollTop - 32
+                                  parent.scrollTo({ top: offset, behavior: 'smooth' })
+                                  return
+                                }
+                                parent = parent.parentElement
+                              }
                             }}
                             className="truncate rounded-[var(--radius-sm)] px-2 py-1 text-left text-xs text-[var(--text-muted)] transition-colors duration-fast hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
                           >
