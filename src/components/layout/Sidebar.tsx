@@ -61,10 +61,11 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                       'flex w-full items-center gap-2.5 rounded-[var(--radius-md)] px-2.5 py-2',
                       'text-sm font-medium transition-colors duration-fast',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--acc-img)]',
-                      'disabled:cursor-not-allowed disabled:opacity-40',
                       isActive
                         ? 'bg-[rgba(168,85,247,0.12)] text-[var(--acc-img)]'
-                        : 'text-[var(--text-muted)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
+                        : item.disabled
+                          ? 'cursor-default text-[var(--text-muted)]'
+                          : 'text-[var(--text-secondary)] hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]',
                     )}
                   >
                     {item.icon && (

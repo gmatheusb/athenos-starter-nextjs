@@ -9,9 +9,8 @@
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  Sidebar 236px (lg+)   │  Content area (flex: 1)            │
-│  bg: dark=#07080f      │  bg-canvas                         │
-│       light=#f8f9fc    │  overflow-y: auto                  │
-│  border-right: border  │                                    │
+│  bg-panel-deep         │  bg-canvas                         │
+│  border-right: border  │  overflow-y: auto                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -33,8 +32,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
 ## Sidebar — Anatomia Completa
 
-> Exceção de tema: **a Sidebar é sempre dark**, independente do tema do produto.
-> `bg-[#07080f]` — hardcoded, não usa `--bg-canvas`.
+> A Sidebar responde ao tema via `--bg-panel-deep` — light e dark alternam automaticamente.
 
 ```tsx
 // components/layout/Sidebar.tsx
@@ -45,8 +43,8 @@ export function Sidebar() {
     <aside
       className="
         w-[236px] h-screen flex flex-col
-        bg-[#07080f]
-        border-r border-[var(--border)]
+        bg-[var(--bg-panel-deep)]
+        border-r border-[var(--border-subtle)]
         sticky top-0
       "
     >

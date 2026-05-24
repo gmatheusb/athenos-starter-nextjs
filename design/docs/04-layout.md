@@ -142,7 +142,7 @@ export function Navbar({ pageTitle, showSearch = true }: NavbarProps) {
 
       {/* ── Sidebar drawer — mobile ── */}
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
-        <SheetContent side="left" className="w-[236px] p-0 bg-[#07080f] border-r border-[var(--border)]">
+        <SheetContent side="left" className="w-[236px] p-0 bg-[var(--bg-panel-deep)] border-r border-[var(--border-subtle)]">
           <Sidebar />
         </SheetContent>
       </Sheet>
