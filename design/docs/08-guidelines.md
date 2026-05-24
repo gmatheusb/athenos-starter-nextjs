@@ -272,6 +272,39 @@ className="
 "
 ```
 
+### `'use client'` — quando usar
+
+Adicionar `'use client'` **apenas** quando o componente usa estado client-side. Componentes puramente visuais são Server Components por padrão e não precisam da diretiva.
+
+```tsx
+// ✅ Precisa de 'use client' — usa useState / hooks de browser
+'use client'
+export function Combobox() { const [open, setOpen] = useState(false) ... }
+
+// ✅ Não precisa — componente puramente visual
+export function PageHeader({ title, description }: PageHeaderProps) {
+  return <div>...</div>
+}
+```
+
+| Com `'use client'` | Sem `'use client'` |
+|---|---|
+| Button, Input, Modal, Dropdown | PageHeader, Divider, Tag |
+| Qualquer componente com `useState` | Componentes só de renderização |
+| Hooks de browser (`useRef`, `useEffect`) | Componentes de layout estático |
+
+### `scroll-area` — scrollbar customizado
+
+Adicionar a classe CSS `.scroll-area` a qualquer elemento com `overflow-y-auto` ou `overflow-x-auto` para aplicar o scrollbar fino do design system (6px, thumb `--border-strong`, hover `--text-muted-dim`).
+
+```tsx
+// ✅ Com scrollbar do design system
+<div className="scroll-area flex-1 overflow-y-auto px-2 py-3">
+
+// ❌ Scrollbar nativo padrão do browser
+<div className="flex-1 overflow-y-auto px-2 py-3">
+```
+
 ### Separação de Lógica
 
 ```tsx
@@ -293,6 +326,25 @@ export default function AdminPage() {
 ---
 
 ## Anti-patterns
+
+### `overflow-hidden` + posicionamento absoluto
+
+```tsx
+// ❌ overflow-hidden no wrapper externo — corta dropdowns e popovers
+<Card className="overflow-hidden">
+  <Combobox />   {/* dropdown invisível — cortado pelo overflow-hidden */}
+</Card>
+
+// ✅ overflow-hidden apenas no elemento que precisa clipar visualmente
+<Card>
+  <div className="rounded-t-xl overflow-hidden bg-[var(--surface-deep)]">
+    {/* header com background clipado ao border-radius */}
+  </div>
+  <Combobox />   {/* dropdown flutua livremente */}
+</Card>
+```
+
+> Regra: `overflow-hidden` em um ancestral corta **todos** os filhos com `position: absolute` — dropdowns, tooltips, popovers e datepickers somem ou ficam cortados. Aplicar somente no elemento mínimo necessário.
 
 ### Estilos
 

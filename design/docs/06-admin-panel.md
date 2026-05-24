@@ -30,74 +30,95 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
 ---
 
-## Sidebar — Anatomia Completa
+## Sidebar — API Completa
 
-> A Sidebar responde ao tema via `--bg-panel-deep` — light e dark alternam automaticamente.
+> Responde ao tema via `--bg-panel-deep` — light e dark alternam automaticamente.
+> Arquivo: `src/components/layout/Sidebar.tsx`
 
-```tsx
-// components/layout/Sidebar.tsx
-export function Sidebar() {
-  const pathname = usePathname()
+### Interfaces
 
-  return (
-    <aside
-      className="
-        w-[236px] h-screen flex flex-col
-        bg-[var(--bg-panel-deep)]
-        border-r border-[var(--border-subtle)]
-        sticky top-0
-      "
-    >
-      {/* ── Logo ── */}
-      <div className="flex items-center gap-2.5 px-5 pt-6 pb-5">
-        <AsteriskIcon className="w-[22px] h-[22px] text-white" />
-        <span className="text-[17px] font-bold tracking-[-0.4px] text-white">atlas</span>
-      </div>
+```ts
+interface SidebarSubItem {
+  id: string
+  label: string
+}
 
-      <div className="h-px bg-[rgba(255,255,255,0.055)] mx-4 mb-2" />
+interface SidebarItem {
+  id: string
+  label: string
+  icon?: ReactNode
+  href?: string
+  badge?: string | number
+  disabled?: boolean
+  subitems?: SidebarSubItem[]   // ativa comportamento accordion
+}
 
-      {/* ── Navegação ── */}
-      <nav className="flex-1 px-3 py-2 space-y-0.5">
-        {NAV_SECTIONS.map(section => (
-          <div key={section.label} className="mb-4">
-            <p className="px-3.5 mb-1.5 text-[9.5px] font-semibold uppercase tracking-[0.1em] text-[rgba(148,163,184,0.30)]">
-              {section.label}
-            </p>
-            {section.items.map(item => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center gap-2.5 px-3.5 py-2.5 rounded-pill mb-0.5',
-                    'text-[13.5px] transition-all duration-fast',
-                    isActive
-                      ? 'bg-[linear-gradient(135deg,#7c3aed,#db2777)] text-white font-semibold shadow-[0_4px_20px_rgba(124,58,237,0.35)]'
-                      : 'text-[rgba(148,163,184,0.65)] font-normal hover:bg-[rgba(255,255,255,0.05)] hover:text-[rgba(203,213,225,0.9)]'
-                  )}
-                >
-                  <item.icon
-                    size={16}
-                    className={isActive ? 'opacity-100' : 'opacity-60'}
-                    aria-hidden="true"
-                  />
-                  {item.label}
-                </Link>
-              )
-            })}
-          </div>
-        ))}
-      </nav>
+interface SidebarSection {
+  title?: string
+  items: SidebarItem[]
+}
 
-      <div className="h-px bg-[rgba(255,255,255,0.055)] mx-4" />
-
-      {/* ── Rodapé: Usuário ── */}
-      <SidebarFooter />
-    </aside>
-  )
+interface SidebarProps {
+  sections: SidebarSection[]
+  activeId?: string
+  onNavigate?: (id: string) => void
+  header?: ReactNode            // slot acima da lista
+  footer?: ReactNode            // slot abaixo da lista
+  className?: string
 }
 ```
+
+### Comportamento de subitems (accordion)
+
+- Quando `item.subitems` existe, um chevron rotacionável aparece à direita do item
+- Ao ativar o item (`activeId === item.id`), os subitems expandem com borda guia à esquerda
+- Subitems são `<button>` clicáveis — ao clicar, fazem scroll suave até o elemento com `id` correspondente no container scrollável mais próximo (usando `getBoundingClientRect` + `scrollTo`)
+- O `badge` é ocultado automaticamente quando `subitems` existe
+- Itens com `disabled: true` ficam com `cursor-default` e `--text-muted` sem `opacity` adicional
+
+### Exemplo de uso
+
+```tsx
+import { Sidebar } from '@/components/layout/Sidebar'
+
+const NAV = [
+  { id: 'basic', label: 'Básico', icon: Layers, items: ['Button', 'Alert', 'Card'] },
+  { id: 'forms', label: 'Formulários', icon: PenLine, items: ['Input', 'Select'] },
+]
+
+const sections = [{
+  title: 'Categorias',
+  items: NAV.map(s => ({
+    id: s.id,
+    label: s.label,
+    icon: <s.icon size={15} />,
+    subitems: s.items.map(name => ({ id: `item-${name}`, label: name })),
+  })),
+}]
+
+<Sidebar
+  activeId={activeId}
+  onNavigate={setActiveId}
+  sections={sections}
+  footer={
+    <p className="text-[10px] text-[var(--text-muted-dim)]">v2.0</p>
+  }
+/>
+```
+
+### Scroll para subitem via `data-showcase`
+
+O mecanismo de scroll do subitem usa dois estágios de busca:
+
+```ts
+// 1. Busca exata pelo id
+document.getElementById(label.replace(/\s+/g, ''))
+
+// 2. Fallback: busca parcial em data-showcase (cobre títulos compostos)
+document.querySelector(`[data-showcase*="${label}"]`)
+```
+
+Para que o scroll funcione, o elemento alvo deve ter um `id` ou `data-showcase` compatível com o label do subitem. O componente `ShowcaseBlock` faz isso automaticamente.
 
 ### Sidebar Footer (Usuário Logado)
 
