@@ -125,10 +125,14 @@ export function Sidebar({ sections, activeId, onNavigate, header, footer, classN
                                 if (/(auto|scroll)/.test(overflow + overflowY)) {
                                   const offset = el.getBoundingClientRect().top - parent.getBoundingClientRect().top + parent.scrollTop - 32
                                   parent.scrollTo({ top: offset, behavior: 'smooth' })
-                                  return
+                                  break
                                 }
                                 parent = parent.parentElement
                               }
+                              el.classList.remove('showcase-highlight')
+                              void el.offsetWidth
+                              el.classList.add('showcase-highlight')
+                              el.addEventListener('animationend', () => el.classList.remove('showcase-highlight'), { once: true })
                             }}
                             className="truncate rounded-[var(--radius-sm)] px-2 py-1 text-left text-xs text-[var(--text-muted)] transition-colors duration-fast hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
                           >

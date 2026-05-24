@@ -275,3 +275,15 @@ body {
   border-radius: 999px;
 }
 .scroll-area::-webkit-scrollbar-thumb:hover { background: var(--text-muted-dim); }
+
+/* ── Showcase highlight glow ──────────────────────────────────── */
+@keyframes showcase-glow {
+  0%   { box-shadow: 0 0 0 0px rgba(124, 58, 237, 0); }
+  25%  { box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.5), 0 0 24px rgba(124, 58, 237, 0.18); }
+  100% { box-shadow: 0 0 0 0px rgba(124, 58, 237, 0); }
+}
+
+.showcase-highlight {
+  animation: showcase-glow 1.4s ease-out forwards;
+  border-radius: inherit;
+}
