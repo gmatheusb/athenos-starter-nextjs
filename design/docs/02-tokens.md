@@ -94,6 +94,7 @@ Todo este bloco deve estar em `src/app/globals.css`. Nunca duplicar em outros ar
   /* ── Z-index ─────────────────────────────────────── */
   --z-base:    0;
   --z-sticky:  10;
+  --z-popover: 30;
   --z-overlay: 40;
   --z-modal:   50;
   --z-toast:   60;
@@ -249,7 +250,7 @@ Invariante entre temas. **Sempre usar a variável, nunca o número literal.**
 ```
 --z-base:    0   → conteúdo de página
 --z-sticky:  10  → barras fixas, headers
-             20  → dropdowns (menus flutuantes)
+--z-popover: 30  → dropdowns, menus flutuantes, popovers
 --z-overlay: 40  → backdrop de modal
 --z-modal:   50  → janelas modais
 --z-toast:   60  → notificações
