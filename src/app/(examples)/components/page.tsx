@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database } from 'lucide-react'
+import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database, Zap, Wrench } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Button } from '@/components/ui/Button'
@@ -14,6 +14,8 @@ import { FormsSection } from './_sections/FormsSection'
 import { FeedbackSection } from './_sections/FeedbackSection'
 import { NavigationSection } from './_sections/NavigationSection'
 import { DataSection } from './_sections/DataSection'
+import { HooksSection } from './_sections/HooksSection'
+import { UtilsSection } from './_sections/UtilsSection'
 import type { LucideIcon } from 'lucide-react'
 
 interface NavSection {
@@ -60,6 +62,20 @@ const NAV: NavSection[] = [
     items: ['PageHeader', 'DataTable', 'Timeline', 'CodeBlock', 'Carousel', 'VirtualList', 'ScrollArea', 'CopyButton'],
     component: DataSection,
   },
+  {
+    id: 'hooks',
+    label: 'Hooks',
+    icon: Zap,
+    items: ['useAsync', 'useDebounce', 'useInterval', 'useLocalStorage', 'useMediaQuery', 'useOnClickOutside', 'useKeyboard'],
+    component: HooksSection,
+  },
+  {
+    id: 'utils',
+    label: 'Utilitários',
+    icon: Wrench,
+    items: ['format — Números', 'format — Datas', 'format — Strings', 'dates — Cálculos', 'validators — CPF & CNPJ', 'validators — Contato'],
+    component: UtilsSection,
+  },
 ]
 
 export default function ComponentsPage() {
@@ -103,7 +119,7 @@ export default function ComponentsPage() {
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-1.5 sm:flex">
             <Tag label="63 componentes" variant="default" />
-            <Tag label="7 hooks" variant="default" />
+            <Tag label="9 hooks" variant="default" />
             <Tag label="3 utilitários" variant="default" />
           </div>
 
@@ -142,7 +158,7 @@ export default function ComponentsPage() {
           <div className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-canvas)]/80 px-8 py-5 backdrop-blur-sm">
             <PageHeader
               title={active.label}
-              description={`${active.items.length} componentes nesta categoria`}
+              description={`${active.items.length} ${active.id === 'hooks' ? 'hooks' : active.id === 'utils' ? 'módulos de utilitários' : 'componentes'} nesta categoria`}
               actions={
                 <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--acc-img)]/10">
                   <ActiveIcon size={15} className="text-[var(--acc-img)]" />

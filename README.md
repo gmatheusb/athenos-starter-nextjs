@@ -9,7 +9,6 @@ Após rodar localmente, acesse **`/components`** para ver todos os 63 componente
 ## Features
 
 | | |
-|---|---|
 | 🧩 63 componentes prontos para produção | 🎨 Dual theme (light/dark) via CSS Variables |
 | 🪝 9 hooks customizados | 🛠️ 3 módulos de utilitários (format, validators, dates) |
 | ⚡ Next.js 16 + Turbopack + React 19 | 🔷 TypeScript estrito |
