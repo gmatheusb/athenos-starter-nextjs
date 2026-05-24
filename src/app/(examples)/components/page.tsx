@@ -4,6 +4,11 @@ import { useState } from 'react'
 import { Sparkles, Sun, Moon, Layers, PenLine, Bell, Navigation, Database } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { Sidebar } from '@/components/layout/Sidebar'
+import { Button } from '@/components/ui/Button'
+import { Tag } from '@/components/ui/Tag'
+import { PageHeader } from '@/components/ui/PageHeader'
+import { ScrollArea } from '@/components/ui/ScrollArea'
+import { Divider } from '@/components/ui/Divider'
 import { BasicSection } from './_sections/BasicSection'
 import { FormsSection } from './_sections/FormsSection'
 import { FeedbackSection } from './_sections/FeedbackSection'
@@ -88,8 +93,11 @@ export default function ComponentsPage() {
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-[var(--bg-canvas)]">
 
-      {/* Header */}
-      <header className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-modal)] px-5" style={{ zIndex: 'var(--z-sticky)' }}>
+      {/* Header — usa Button e Tag do design system */}
+      <header
+        className="flex h-14 shrink-0 items-center justify-between border-b border-[var(--border)] bg-[var(--bg-modal)] px-5"
+        style={{ zIndex: 'var(--z-sticky)' }}
+      >
         <div className="flex items-center gap-3">
           <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-gradient-to-br from-[var(--acc-img)] to-[var(--acc-vid)]">
             <Sparkles size={14} className="text-white" />
@@ -100,25 +108,23 @@ export default function ComponentsPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 sm:flex">
-            {['63 componentes', '7 hooks', '3 utilitários'].map((label) => (
-              <span
-                key={label}
-                className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-muted)]"
-              >
-                {label}
-              </span>
-            ))}
+        <div className="flex items-center gap-2">
+          <div className="hidden items-center gap-1.5 sm:flex">
+            <Tag label="63 componentes" variant="default" />
+            <Tag label="7 hooks" variant="default" />
+            <Tag label="3 utilitários" variant="default" />
           </div>
-          <button
-            type="button"
+
+          <Divider orientation="vertical" className="mx-1 hidden h-5 sm:block" />
+
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={toggleTheme}
             aria-label="Alternar tema"
-            className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-hover)] hover:text-[var(--text-primary)]"
           >
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -139,19 +145,25 @@ export default function ComponentsPage() {
 
         {/* Content */}
         <main className="flex flex-1 flex-col overflow-hidden">
-          <div className="flex shrink-0 items-center gap-3 border-b border-[var(--border)] bg-[var(--bg-canvas)]/80 px-8 py-4 backdrop-blur-sm">
-            <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--acc-img)]/10">
-              <ActiveIcon size={15} className="text-[var(--acc-img)]" />
-            </div>
-            <div>
-              <h1 className="text-sm font-semibold text-[var(--text-primary)]">{active.label}</h1>
-              <p className="text-xs text-[var(--text-muted)]">{active.items.length} componentes nesta categoria</p>
-            </div>
+
+          {/* Section header — usa PageHeader do design system */}
+          <div className="shrink-0 border-b border-[var(--border)] bg-[var(--bg-canvas)]/80 px-8 py-5 backdrop-blur-sm">
+            <PageHeader
+              title={active.label}
+              description={`${active.items.length} componentes nesta categoria`}
+              actions={
+                <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-md)] bg-[var(--acc-img)]/10">
+                  <ActiveIcon size={15} className="text-[var(--acc-img)]" />
+                </div>
+              }
+            />
           </div>
 
-          <div className="scroll-area flex-1 overflow-y-auto p-8">
+          {/* Scroll area — usa ScrollArea do design system */}
+          <ScrollArea className="flex-1 p-8">
             <ActiveSection />
-          </div>
+          </ScrollArea>
+
         </main>
       </div>
     </div>
