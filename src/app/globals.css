@@ -261,3 +261,16 @@ body {
   from { transform: translateX(-100%); }
   to   { transform: translateX(0);     }
 }
+
+/* ── ScrollArea ───────────────────────────────────────────────── */
+.scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.scroll-area::-webkit-scrollbar        { width: 6px; height: 6px; }
+.scroll-area::-webkit-scrollbar-track  { background: transparent; }
+.scroll-area::-webkit-scrollbar-thumb  {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+.scroll-area::-webkit-scrollbar-thumb:hover { background: var(--text-muted-dim); }
